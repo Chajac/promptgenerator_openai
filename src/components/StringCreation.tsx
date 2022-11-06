@@ -4,7 +4,6 @@ function matchAndWeight(string: string) {
   }
   const reg = /([a-z A-Z À-ÿ0-9'])+/g;
   let match = string.match(reg);
-  let test;
   let addWeight;
   if (match !== null) {
     match?.map((i) => {
