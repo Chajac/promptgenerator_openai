@@ -1,24 +1,20 @@
-function regexFind(string: string) {
+function matchAndWeight(string: string) {
   if (string === null) {
-    return;
+    return [];
   }
   const reg = /([a-z A-Z À-ÿ0-9'])+/g;
-  const match = string.match(reg);
-  return match;
-}
-function arrayWeight(arr: Array<any>) {
-  if (arr !== null) {
-    arr.forEach((i) => {
-      return [i, 0];
+  let match = string.match(reg);
+  let test;
+  let addWeight;
+  if (match !== null) {
+    match?.map((i) => {
+      return (addWeight = [i, 0]);
     });
-    for (let i = 0; i < arr.length; i++) {
-      console.log(arr[i]);
-      for (let o = 0; o < arr[i].length; o++) {
-        console.log(arr[i][o]);
-      }
-    }
-    return;
+  } else {
+    return [];
   }
+
+  return addWeight;
 }
 
 function createPrompt(
@@ -48,22 +44,26 @@ function createPrompt(
     default:
       // console.table(finalArray);
       let string = finalArray.filter((item) => item!.length !== 0).join(",");
-      let matchString = regexFind(string);
-      // if (testArray !== null || undefined) {
-      //   for (let i = 0; i < testArray.length; i++) {
-      //     console.log(testArray[i]);
-      //     for (let o = 0; o < testArray[i].length; o++) {
-      //       console.log(testArray[i][o]);
-      //     }
-      //   }
-      // }
+      let addWeight: any = matchAndWeight(string);
       let displayString;
-      if (matchString !== null) {
-        displayString = matchString?.join(",");
-      }
+      console.log(addWeight);
+      // console.log(
+      //   matchString?.map((i) => {
+      //     return [i, 0];
+      //   })
+      // );
+
+      /*       if (matchString !== null) {
+        for (let i = 0; i < matchString!.length; i++) {
+          let subString = matchString![i][0];
+          return (displayString = subString);
+        }
+      } else {
+        return [];
+      } */
       //Maybe 2D array + weights for showing?
       // console.table(matchweightArr);
-      return displayString;
+      return addWeight;
     // return finalArray.filter((item) => item!.length !== 0).join(",");
   }
 }
