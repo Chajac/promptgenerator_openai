@@ -8,14 +8,13 @@ import StyleModifiers from "./components/StyleModifers";
 import RangeSlider from "./components/RangeSlider";
 import { Configuration, OpenAIApi } from "openai";
 import oaiConfig from "./components/OpenAIConfig";
+import ShowPrompt from "./components/ShowPrompt";
 import createPrompt from "./components/StringCreation";
 import GlobalStyle from "./components/styled/Theme";
 import { Button } from "./components/styled/ButtonStyle";
 import { Flex } from "./components/styled/Flex";
 import { Grid } from "./components/styled/Grid";
 import OpenAiGen from "./components/OpenAiGen";
-
-//regex to match string every string before a comma /([a-z A-Z À-ÿ0-9'])+/g
 
 /* // Open AI settings
 const oaiConfig = new Configuration({
@@ -35,6 +34,7 @@ function App() {
   const [promptWeight, setpromptWeight] = useState(0);
   const [posmodWeight, setposmodWeight] = useState(0);
   const [negmodWeight, setnegmodWeight] = useState(0);
+  const [promptArray, setpromptArray] = useState([]);
 
   async function generatePrompt(prompt: string) {
     const openai = new OpenAIApi(oaiConfig);
@@ -50,16 +50,56 @@ function App() {
       return setgenPrompt(response.data.choices[0].text);
     }
   }
-  // createPrompt(
-  //   getStyle,
-  //   genprompt,
-  //   getArtists,
-  //   getPosMod,
-  //   getNegMod
-  //   // promptWeight,
-  //   // posmodWeight,
-  //   // negmodWeight
-  // );
+  const prompt = createPrompt(
+    getStyle,
+    genprompt,
+    getArtists,
+    getPosMod,
+    getNegMod
+    // promptWeight,
+    // posmodWeight,
+    // negmodWeight
+  );
+
+  // function adjustWeight(tdArray: Array<any>, index: number, increment: number) {
+  //   tdArray.find((el, ind) => {
+  //     if (ind === index) {
+  //       console.log(
+  //         "matched index:" + index + " with " + el[0] + " weight of:" + el[1]
+  //       );
+  //       return (el[1] += increment);
+  //     }
+  //     return el;
+  //   });
+  //   tdArray.forEach((val, ind) => {
+  //     if (ind === index) {
+  //       console.log(
+  //         "val: " + val + " ind: " + ind + "Check? " + tdArray[ind][1]
+  //       );
+  //       tdArray[ind][1] += increment;
+  //     }
+  //   });
+  // }
+
+  // const promptMarkUp = prompt?.map((i: any, ind: number) => (
+  //   <p
+  //     id="hoverCol"
+  //     style={{
+  //       display: "inline-block",
+  //       textAlign: "center",
+  //       backgroundColor: randomColorRGBA(0),
+  //     }}
+  //   >
+  //   <PromptP>
+  //     {ind}
+  //     <br />
+  //     {i[0]}
+  //     <br />
+  //     {i[1]}
+  //     <button onClick={() => adjustWeight(prompt, ind, 1)}>Weight Up</button>
+  //   </PromptP>
+  //   </p>
+  // ));
   return (
     <Fragment>
       <GlobalStyle />
@@ -132,20 +172,17 @@ function App() {
             </div>
           </div>
 
-          <p>
+          {/*           <p>
             {" "}
             prompt is:
-            {createPrompt(
-              getStyle,
-              genprompt,
-              getArtists,
-              getPosMod,
-              getNegMod
-              // promptWeight,
-              // posmodWeight,
-              // negmodWeight
-            )}
-          </p>
+            {promptMarkUp}
+          </p> */}
+          <div>
+            <ShowPrompt
+              prompt={prompt}
+              {...{ getStyle, genprompt, getArtists, getPosMod, getNegMod }}
+            />
+          </div>
           <p>{getStyle}</p>
           <ArtistData getArtists={setGetArtists} />
           <StyleModifiers getStyle={setgetStyle} />

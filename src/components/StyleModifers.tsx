@@ -40,8 +40,6 @@ styleModifiers.forEach((items: any) => {
   });
 });
 
-console.log(selectOptions);
-
 function stringData(data: any) {
   // For multiselect
   /*   if (data.length > 0) {

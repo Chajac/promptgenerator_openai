@@ -4,16 +4,19 @@ function matchAndWeight(string: string) {
   }
   const reg = /([a-z A-Z À-ÿ0-9'])+/g;
   let match = string.match(reg);
-  let addWeight;
-  if (match !== null) {
-    match?.map((i) => {
-      return (addWeight = [i, 0]);
-    });
-  } else {
-    return [];
-  }
+  let addWeight: any = create2DArray(match);
+  // console.table(addWeight);
 
-  return addWeight;
+  return { match, addWeight };
+}
+
+function create2DArray(arr: any) {
+  if (arr === null || undefined) {
+    return;
+  } else {
+    let data: Array<Array<string | number>> = arr.map((i: any) => [i, 0]);
+    return data;
+  }
 }
 
 function createPrompt(
@@ -43,30 +46,20 @@ function createPrompt(
     default:
       // console.table(finalArray);
       let string = finalArray.filter((item) => item!.length !== 0).join(",");
-      let addWeight: any = matchAndWeight(string);
+      let { match, addWeight }: any = matchAndWeight(string);
       let displayString;
-      console.log(addWeight);
-      // console.log(
-      //   matchString?.map((i) => {
-      //     return [i, 0];
-      //   })
-      // );
+      // if (addWeight !== undefined || null) {
+      //   displayString = addWeight.map((i: any) => i[0]);
 
-      /*       if (matchString !== null) {
-        for (let i = 0; i < matchString!.length; i++) {
-          let subString = matchString![i][0];
-          return (displayString = subString);
-        }
-      } else {
-        return [];
-      } */
-      //Maybe 2D array + weights for showing?
-      // console.table(matchweightArr);
+      //   return displayString;
+      // }
       return addWeight;
     // return finalArray.filter((item) => item!.length !== 0).join(",");
   }
 }
-/*   //Artists & positive modifiers dont exist
+export default createPrompt;
+
+/*   //Artists & positive modifiers dont exist **OLD WAY -- FOR DISCO DIFFUSION
       if ((finalArray[3]?.length && finalArray[4]?.length) === 0 || undefined) {
         //finalString = finalArray.slice(0, finalArray.length - 2).join("");
         finalString = finalArray[0] + "," + finalArray[1];
@@ -132,4 +125,3 @@ function createPrompt(
   }
 }
  */
-export default createPrompt;

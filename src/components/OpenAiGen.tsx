@@ -47,7 +47,7 @@ function OpenAiGen({ getGenPrompt, oAIConfig }: any) {
       return setgenPrompt(response.data.choices[0].text);
     }
   }
-  console.log(models);
+  //console.log(models);
 
   const modelList: { label?: string; value?: string }[] = [];
 

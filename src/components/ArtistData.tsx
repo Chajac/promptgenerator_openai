@@ -114,6 +114,7 @@ export const artists: any = {
     "Rob Gonsalves",
     "Edward Hopper",
     "Larry Elmore",
+    "Alexander Nasmyth",
   ],
   medical: ["Robert Hooke"],
   sculpture: ["Daniel Arsham"],
