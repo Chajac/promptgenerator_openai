@@ -1,61 +1,63 @@
 function matchAndWeight(string: string) {
-  if (string === null) {
-    return [];
-  }
-  const reg = /([a-z A-Z À-ÿ0-9'])+/g;
-  let match = string.match(reg);
-  let addWeight: any = create2DArray(match);
-  // console.table(addWeight);
+	if (string === null) {
+		return [];
+	}
+	const reg = /([a-z A-Z À-ÿ0-9'])+/g;
+	let match = string.match(reg);
+	let addWeight: any = create2DArray(match);
+	// console.table(addWeight);
 
-  return { match, addWeight };
+	return { match, addWeight };
 }
 
 function create2DArray(arr: any) {
-  if (arr === null || undefined) {
-    return;
-  } else {
-    let data: Array<Array<string | number>> = arr.map((i: any) => [i, 0]);
-    return data;
-  }
+	if (arr === null || undefined) {
+		return;
+	} else {
+		let data: Array<Array<string | number>> = arr.map((i: any) => [i, 0]);
+		return data;
+	}
 }
 
 function createPrompt(
-  style: string | null,
-  aiPrompt: string | null,
-  artists: string | null,
-  posmod: string | null,
-  negmod: string | null
-  // promptWeight?: number | string,
-  // posmodWeight?: number | string,
-  // negmodWeight?: number | string
+	style: string | null,
+	aiPrompt: string | null,
+	artists: string | null,
+	posmod: string | null,
+	negmod: string | null
+	// promptWeight?: number | string,
+	// posmodWeight?: number | string,
+	// negmodWeight?: number | string
 ) {
-  let finalArray: Array<string | null> = [
-    style,
-    aiPrompt,
-    artists,
-    posmod,
-    negmod,
-  ];
+	let finalArray: Array<string | null> = [
+		style,
+		aiPrompt,
+		artists,
+		posmod,
+		negmod,
+	];
 
-  // let finalString: string | undefined | null;
-  //bit of a messy string concat for Disco-Diffusion prompt weighting. / works for Stable-diffusion too.
-  // to do: take away prompts, add regex then do weights from that.
-  switch (aiPrompt) {
-    case null:
-      return;
-    default:
-      // console.table(finalArray);
-      let string = finalArray.filter((item) => item!.length !== 0).join(",");
-      let { match, addWeight }: any = matchAndWeight(string);
-      let displayString;
-      // if (addWeight !== undefined || null) {
-      //   displayString = addWeight.map((i: any) => i[0]);
+	// let finalString: string | undefined | null;
+	//bit of a messy string concat for Disco-Diffusion prompt weighting. / works for Stable-diffusion too.
+	// to do: take away prompts, add regex then do weights from that.
+	switch (aiPrompt) {
+		case null:
+			return;
+		default:
+			// console.table(finalArray);
+			let string = finalArray
+				.filter((item) => item!.length !== 0)
+				.join(",");
+			let { match, addWeight }: any = matchAndWeight(string);
+			let displayString;
+			// if (addWeight !== undefined || null) {
+			//   displayString = addWeight.map((i: any) => i[0]);
 
-      //   return displayString;
-      // }
-      return addWeight;
-    // return finalArray.filter((item) => item!.length !== 0).join(",");
-  }
+			//   return displayString;
+			// }
+			return addWeight;
+		// return finalArray.filter((item) => item!.length !== 0).join(",");
+	}
 }
 export default createPrompt;
 

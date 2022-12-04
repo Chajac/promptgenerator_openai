@@ -1,106 +1,169 @@
-import createPrompt from "./StringCreation";
 import PromptP from "./styled/PromptP";
-import React, {
-  Fragment,
-  useCallback,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import { Fragment, useEffect, useState } from "react";
+import { Button } from "./styled/ButtonStyle";
+import {
+	DragDropContext,
+	DropResult,
+	Draggable,
+	Droppable,
+	DroppableProvided,
+	DroppableProps,
+} from "react-beautiful-dnd";
+import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
-function ShowPrompt({
-  // getStyle,
-  // genprompt,
-  // getArtists,
-  // getPosMod,
-  // getNegMod,
-  prompt,
-}: any) {
-  // What is this component dependent on? Prompt. useCallback() on displayPrompt with dep on prompt?
+import React from "react";
 
-  const [statePrompt, setStatePrompt] = useState(prompt);
-
-  const adjustWeightT = useCallback(
-    (tdArray: Array<any>, index: number, increment: number) => {
-      tdArray.forEach((val, ind) => {
-        if (ind === index) {
-          console.log(
-            "val: " + val + " ind: " + ind + "Check? " + tdArray[ind][1]
-          );
-          return setStatePrompt((tdArray[ind][1] += increment));
-        }
-      });
-    },
-    []
-  );
-
-  const displayPrompt = useCallback(
-    (arr: Array<any>) => {
-      return arr?.map((i: string, ind: number) => {
-        console.log(`Ind:${ind} & ele:${i}`);
-        return (
-          <PromptP key={ind}>
-            {ind}
-            <br />
-            {i[0]}
-            <br />
-            {i[1]}
-            <button onClick={() => adjustWeightT(prompt, ind, 1)}>
-              Weight Up
-            </button>
-          </PromptP>
-        );
-      });
-    },
-    [prompt, adjustWeightT]
-  );
-
-  function adjustWeight(tdArray: Array<any>, index: number, increment: number) {
-    // tdArray.find((el, ind) => {
-    //   if (ind === index) {
-    //     console.log(
-    //       "matched index:" + index + " with " + el[0] + " weight of:" + el[1]
-    //     );
-    //     return (el[1] += increment);
-    //   }
-    //   return el;
-    // });
-    tdArray.forEach((val, ind) => {
-      if (ind === index) {
-        console.log(
-          "val: " + val + " ind: " + ind + "Check? " + tdArray[ind][1]
-        );
-        return (tdArray[ind][1] += increment);
-      }
-    });
-  }
-
-  //useEffect(() => {}, [displayPrompt]);
-
-  return <Fragment>{displayPrompt(prompt)}</Fragment>;
-
-  // return prompt?.map((i: string, ind: number) => {
-  //   console.log(`Ind:${ind} & ele:${i}`);
-
-  //   return (
-  //     <>
-  //       <PromptP>
-  //         {ind}
-  //         <br />
-  //         {i[0]}
-  //         <br />
-  //         {i[1]}
-  //         <button
-  //           onClick={() => {
-  //             adjustWeight(prompt, ind, 1);
-  //           }}
-  //         >
-  //           Weight Up
-  //         </button>
-  //       </PromptP>
-  //     </>
-  //   );
-  // });
+interface ExtendedDroppableProps extends DroppableProps {
+	axis: "x" | "y";
 }
 
-export default ShowPrompt;
+type TwoDeeArray = Array<Array<string | number>>;
+
+const FishYatesShuffle = (arr: any[]) => {
+	const length = arr.length;
+	for (let i = length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+
+		[arr[i], arr[j]] = [arr[j], arr[i]];
+	}
+	return arr;
+};
+const ShowPrompt = ({ prompt }: any) => {
+	// What is this component dependent on? Prompt. useCallback() on displayPrompt with dep on prompt?
+
+	const [statePrompt, setStatePrompt] = useState<
+		Array<Array<string | number>>
+	>([]);
+
+	//handles rendering the prompt without constantly resetting on prompt updating.
+	useEffect(() => {
+		//new Array to not overwrite statePrompt when prompt is updated
+		const updatedArr: TwoDeeArray = [];
+		//Handles initial mount with undefined prompt prop.
+		if (prompt === undefined) {
+			return;
+		} else {
+			//loop through prompt and check if the passed elements exist within statePrompt
+			for (const passedElement of prompt) {
+				const existingElement = statePrompt.find(
+					(existingElement) => existingElement[0] === passedElement[0]
+				);
+				//If element is found use the weight from statePrompt
+				if (existingElement) {
+					updatedArr.push([passedElement[0], existingElement[1]]);
+				} else {
+					//If it doesn't exist in statePrompt but does in the passed prompt use the element from passed prompt
+					updatedArr.push([passedElement[0], passedElement[1]]);
+				}
+			}
+			setStatePrompt(updatedArr);
+		}
+	}, [prompt]);
+
+	const adjustWeight = (
+		oldArray: Array<any>,
+		index: number,
+		increment: number
+	) => {
+		//shallow copy array to update array element
+		const newArray = [...oldArray];
+		newArray[index][1] += increment;
+		setStatePrompt(newArray);
+	};
+
+	const handleShuffle = () => {
+		const shuffledArray = [...statePrompt];
+		FishYatesShuffle(shuffledArray);
+
+		setStatePrompt(shuffledArray);
+	};
+
+	//react-sortable-hoc
+
+	//mouse hover reshuffle handles - reactDnD-Beautiful
+	const onDrop = (dropResult: DropResult) => {
+		if (!dropResult.destination) {
+			return;
+		}
+
+		const updatedStatePrompt = [...statePrompt];
+		const [removed] = updatedStatePrompt.splice(dropResult.source.index, 1);
+		updatedStatePrompt.splice(dropResult.destination.index, 0, removed);
+
+		setStatePrompt(updatedStatePrompt);
+	};
+
+	return (
+		//react-dnd-beautiful
+		<DragDropContext onDragEnd={onDrop}>
+			<Droppable droppableId="droppable" direction="horizontal">
+				{(provided: DroppableProvided, snapshot) => (
+					<div ref={provided.innerRef} {...provided.droppableProps}>
+						{statePrompt.map((i, ind) => (
+							<Draggable
+								key={i[0]}
+								draggableId={String(i[0])}
+								index={ind}
+							>
+								{(provided) => (
+									<Fragment>
+										<PromptP
+											id="existingPrompt"
+											ref={provided.innerRef}
+											{...provided.draggableProps}
+											{...provided.dragHandleProps}
+										>
+											{ind}
+											<br />
+											{i[0]}
+											<br />
+											{i[1]}
+											<button
+												onClick={() =>
+													adjustWeight(
+														statePrompt,
+														ind,
+														1
+													)
+												}
+											>
+												Weight Up
+											</button>
+										</PromptP>
+									</Fragment>
+								)}
+							</Draggable>
+						))}
+						{provided.placeholder}
+						<div>
+							<button onClick={handleShuffle}>
+								Fuck my shit up
+							</button>
+						</div>
+					</div>
+				)}
+			</Droppable>
+		</DragDropContext>
+	);
+
+	// 	<>
+	// 		{statePrompt.map((i, ind) => (
+	// 			<PromptP id="existingPrompt" key={ind}>
+	// 				{ind}
+	// 				<br />
+	// 				{i[0]}
+	// 				<br />
+	// 				{i[1]}
+	// 				<button onClick={() => adjustWeight(statePrompt, ind, 1)}>
+	// 					Weight Up
+	// 				</button>
+	// 			</PromptP>
+	// 		))}
+	// 		<div>
+	// 			<button onClick={handleShuffle}> Fuck my shit up</button>
+	// 		</div>
+	// 	</>
+	// );
+};
+
+export default React.memo(ShowPrompt);
