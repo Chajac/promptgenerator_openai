@@ -9,7 +9,6 @@ import {
 	DroppableProvided,
 	DroppableProps,
 } from "react-beautiful-dnd";
-import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
 import React from "react";
 
@@ -28,12 +27,15 @@ const FishYatesShuffle = (arr: any[]) => {
 	}
 	return arr;
 };
+
 const ShowPrompt = ({ prompt }: any) => {
 	// What is this component dependent on? Prompt. useCallback() on displayPrompt with dep on prompt?
 
 	const [statePrompt, setStatePrompt] = useState<
 		Array<Array<string | number>>
 	>([]);
+
+	//Only run on initial render?
 
 	//handles rendering the prompt without constantly resetting on prompt updating.
 	useEffect(() => {
@@ -60,6 +62,28 @@ const ShowPrompt = ({ prompt }: any) => {
 		}
 	}, [prompt]);
 
+	const handleShuffle = () => {
+		const shuffledArray = [...statePrompt];
+		FishYatesShuffle(shuffledArray);
+
+		setStatePrompt(shuffledArray);
+	};
+
+	function handleClick(
+		weightUpDown: string,
+		ind: number,
+		statePrompt: (string | number)[][]
+	) {
+		switch (weightUpDown) {
+			case "U":
+				adjustWeight(statePrompt, ind, 1);
+				break;
+			case "D":
+				adjustWeight(statePrompt, ind, -1);
+				break;
+		}
+	}
+
 	const adjustWeight = (
 		oldArray: Array<any>,
 		index: number,
@@ -69,13 +93,6 @@ const ShowPrompt = ({ prompt }: any) => {
 		const newArray = [...oldArray];
 		newArray[index][1] += increment;
 		setStatePrompt(newArray);
-	};
-
-	const handleShuffle = () => {
-		const shuffledArray = [...statePrompt];
-		FishYatesShuffle(shuffledArray);
-
-		setStatePrompt(shuffledArray);
 	};
 
 	//react-sortable-hoc
@@ -93,6 +110,18 @@ const ShowPrompt = ({ prompt }: any) => {
 		setStatePrompt(updatedStatePrompt);
 	};
 
+	//colour form
+	function randomColorRGBA(a: number) {
+		// Random Hex {Math.floor(Math.random() * 16777215).toString(16)
+
+		// Random rgba
+		const r: any = Math.floor(Math.random() * 256);
+		const g: any = Math.floor(Math.random() * 256);
+		const b: any = Math.floor(Math.random() * 256);
+		const combined: string = `rgba(${r},${g},${b},${a})`;
+		return `rgba(${r},${g},${b},${a})`;
+	}
+
 	return (
 		//react-dnd-beautiful
 		<DragDropContext onDragEnd={onDrop}>
@@ -108,11 +137,24 @@ const ShowPrompt = ({ prompt }: any) => {
 								{(provided) => (
 									<Fragment>
 										<PromptP
+											key={ind}
+											color={randomColorRGBA(1)}
 											id="existingPrompt"
 											ref={provided.innerRef}
 											{...provided.draggableProps}
 											{...provided.dragHandleProps}
 										>
+											<button
+												onClick={() =>
+													handleClick(
+														"U",
+														ind,
+														statePrompt
+													)
+												}
+											>
+												Weight Up
+											</button>
 											{ind}
 											<br />
 											{i[0]}
@@ -120,14 +162,14 @@ const ShowPrompt = ({ prompt }: any) => {
 											{i[1]}
 											<button
 												onClick={() =>
-													adjustWeight(
-														statePrompt,
+													handleClick(
+														"D",
 														ind,
-														1
+														statePrompt
 													)
 												}
 											>
-												Weight Up
+												Weight Down
 											</button>
 										</PromptP>
 									</Fragment>
