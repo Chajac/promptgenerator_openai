@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import TextField from "./components/TextField";
-import ArtistData from "./components/ArtistData";
+import ArtistSelect from "./components/ArtistSelect";
 import NegModifers from "./components/NegativeModifers";
 import PositiveModifers from "./components/PositiveModifiers";
 import StyleModifiers from "./components/StyleModifers";
@@ -13,8 +13,15 @@ import createPrompt from "./components/StringCreation";
 import GlobalStyle from "./components/styled/Theme";
 import { Button } from "./components/styled/ButtonStyle";
 import { Flex } from "./components/styled/Flex";
-import { Grid } from "./components/styled/Grid";
+import {
+	GridContainer,
+	GridItem,
+	InnerGrid,
+	PromptTitle,
+	VerticalGridSeparator,
+} from "./components/styled/Grid";
 import OpenAiGen from "./components/OpenAiGen";
+import WrittenPrompt from "./components/WrittenPrompt";
 
 /* // Open AI settings
 const oaiConfig = new Configuration({
@@ -23,90 +30,86 @@ const oaiConfig = new Configuration({
 });
  */
 function App() {
-  //const [prompt, setPrompt] = useState("");
-  const [genprompt, setgenPrompt] = useState(null);
-  const [getArtists, setGetArtists] = useState(null);
-  const [getStyle, setgetStyle] = useState(null);
-  const [getNegMod, setGetNegMod] = useState(null);
-  const [getPosMod, setGetPosMod] = useState(null);
-  const [temperature, setTemperature] = useState(0.5);
-  const [queryLength, setqueryLength] = useState(0.5);
-  const [promptWeight, setpromptWeight] = useState(0);
-  const [posmodWeight, setposmodWeight] = useState(0);
-  const [negmodWeight, setnegmodWeight] = useState(0);
-  const [promptArray, setpromptArray] = useState([]);
+	//const [prompt, setPrompt] = useState("");
+	const [genprompt, setgenPrompt] = useState(null);
+	const [getArtists, setGetArtists] = useState(null);
+	const [getStyle, setgetStyle] = useState(null);
+	const [getNegMod, setGetNegMod] = useState(null);
+	const [getPosMod, setGetPosMod] = useState(null);
+	const [temperature, setTemperature] = useState(0.5);
+	const [queryLength, setqueryLength] = useState(0.5);
+	const [promptWeight, setpromptWeight] = useState(0);
+	const [posmodWeight, setposmodWeight] = useState(0);
+	const [negmodWeight, setnegmodWeight] = useState(0);
 
-  async function generatePrompt(prompt: string) {
-    const openai = new OpenAIApi(oaiConfig);
-    const response: any = await openai.createCompletion({
-      model: "text-davinci-002",
-      prompt: `${prompt}`,
-      max_tokens: 24,
-      temperature: 0.4,
-    });
-    if (response === undefined) {
-      console.log("nothing");
-    } else {
-      return setgenPrompt(response.data.choices[0].text);
-    }
-  }
-  const prompt = createPrompt(
-    getStyle,
-    genprompt,
-    getArtists,
-    getPosMod,
-    getNegMod
-    // promptWeight,
-    // posmodWeight,
-    // negmodWeight
-  );
+	const prompt = createPrompt(
+		getStyle,
+		genprompt,
+		getArtists,
+		getPosMod,
+		getNegMod
+		// promptWeight,
+		// posmodWeight,
+		// negmodWeight
+	);
 
-  // function adjustWeight(tdArray: Array<any>, index: number, increment: number) {
-  //   tdArray.find((el, ind) => {
-  //     if (ind === index) {
-  //       console.log(
-  //         "matched index:" + index + " with " + el[0] + " weight of:" + el[1]
-  //       );
-  //       return (el[1] += increment);
-  //     }
-  //     return el;
-  //   });
-  //   tdArray.forEach((val, ind) => {
-  //     if (ind === index) {
-  //       console.log(
-  //         "val: " + val + " ind: " + ind + "Check? " + tdArray[ind][1]
-  //       );
-  //       tdArray[ind][1] += increment;
-  //     }
-  //   });
-  // }
+	// function adjustWeight(tdArray: Array<any>, index: number, increment: number) {
+	//   tdArray.find((el, ind) => {
+	//     if (ind === index) {
+	//       console.log(
+	//         "matched index:" + index + " with " + el[0] + " weight of:" + el[1]
+	//       );
+	//       return (el[1] += increment);
+	//     }
+	//     return el;
+	//   });
+	//   tdArray.forEach((val, ind) => {
+	//     if (ind === index) {
+	//       console.log(
+	//         "val: " + val + " ind: " + ind + "Check? " + tdArray[ind][1]
+	//       );
+	//       tdArray[ind][1] += increment;
+	//     }
+	//   });
+	// }
 
-  // const promptMarkUp = prompt?.map((i: any, ind: number) => (
-  //   <p
-  //     id="hoverCol"
-  //     style={{
-  //       display: "inline-block",
-  //       textAlign: "center",
-  //       backgroundColor: randomColorRGBA(0),
-  //     }}
-  //   >
-  //   <PromptP>
-  //     {ind}
-  //     <br />
-  //     {i[0]}
-  //     <br />
-  //     {i[1]}
-  //     <button onClick={() => adjustWeight(prompt, ind, 1)}>Weight Up</button>
-  //   </PromptP>
-  //   </p>
-  // ));
-  return (
-    <Fragment>
-      <GlobalStyle />
-      <body>
-        <Grid>
-          <OpenAiGen getGenPrompt={setgenPrompt} oAIConfig={oaiConfig} />
-          {/*           <Flex flex="100%" height="10rem">
+	// const promptMarkUp = prompt?.map((i: any, ind: number) => (
+	//   <p
+	//     id="hoverCol"
+	//     style={{
+	//       display: "inline-block",
+	//       textAlign: "center",
+	//       backgroundColor: randomColorRGBA(0),
+	//     }}
+	//   >
+	//   <PromptP>
+	//     {ind}
+	//     <br />
+	//     {i[0]}
+	//     <br />
+	//     {i[1]}
+	//     <button onClick={() => adjustWeight(prompt, ind, 1)}>Weight Up</button>
+	//   </PromptP>
+	//   </p>
+	// ));
+	return (
+		<Fragment>
+			<GlobalStyle />
+			<body>
+				<GridContainer>
+					<h1 className="blackletter">Prompting the Prompter</h1>
+					<div className="titleSeparator">
+						<div className="separatorText">Write your prompt</div>
+					</div>
+					<PromptTitle>
+						<WrittenPrompt getGenPrompt={setgenPrompt} />
+					</PromptTitle>
+					<div className="titleSeparator"></div>
+					{/* 					<OpenAiGen
+						getGenPrompt={setgenPrompt}
+						oAIConfig={oaiConfig}
+					/> */}
+					{/*           <Flex flex="100%" height="10rem">
             <TextField
               value={prompt}
               onChange={setPrompt}
@@ -121,8 +124,7 @@ function App() {
             }
             <p>{genprompt}</p>
           </Flex> */}
-
-          {/*           <RangeSlider
+					{/*           <RangeSlider
             min={0}
             max={100}
             step={1}
@@ -139,7 +141,7 @@ function App() {
           />
           <p>Temperature: {temperature}</p>
  */}
-          <div>
+					{/* <div>
             <div>
               <RangeSlider
                 min={0}
@@ -170,28 +172,45 @@ function App() {
               />
               <p>negmodWeight:{negmodWeight}</p>
             </div>
-          </div>
+          </div> */}
+					<InnerGrid>
+						<GridItem className="double">
+							<div className="t1">Select your style</div> <br />
+							<StyleModifiers getStyle={setgetStyle} />
+						</GridItem>
+						<VerticalGridSeparator />
+						<GridItem className="double">
+							<div className="t1">Add some artists</div>
+							<ArtistSelect getArtists={setGetArtists} />
+						</GridItem>
+					</InnerGrid>
+					<div className="titleSeparator"></div>
+					<GridItem className="posMods">
+						why not add some
+						<PositiveModifers getPosMod={setGetPosMod} />
+					</GridItem>
+					<div className="titleSeparator"></div>
 
-          {/*           <p>
-            {" "}
-            prompt is:
-            {promptMarkUp}
-          </p> */}
-          <div>
-            <ShowPrompt
-              prompt={prompt}
-              {...{ getStyle, genprompt, getArtists, getPosMod, getNegMod }}
-            />
-          </div>
-          <p>{getStyle}</p>
-          <ArtistData getArtists={setGetArtists} />
-          <StyleModifiers getStyle={setgetStyle} />
-          <NegModifers getNegMod={setGetNegMod} />
-          <PositiveModifers getPosMod={setGetPosMod} />
-        </Grid>
-      </body>
-    </Fragment>
-  );
+					<GridItem>
+						<ShowPrompt
+							prompt={prompt}
+							{...{
+								getStyle,
+								genprompt,
+								getArtists,
+								getPosMod,
+								getNegMod,
+							}}
+						/>
+					</GridItem>
+					<GridItem style={{ visibility: "hidden" }}>
+						how about some
+						<NegModifers getNegMod={setGetNegMod} />
+					</GridItem>
+				</GridContainer>
+			</body>
+		</Fragment>
+	);
 }
 
 export default App;

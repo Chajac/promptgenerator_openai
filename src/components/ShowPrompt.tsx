@@ -29,8 +29,6 @@ const FishYatesShuffle = (arr: any[]) => {
 };
 
 const ShowPrompt = ({ prompt }: any) => {
-	// What is this component dependent on? Prompt. useCallback() on displayPrompt with dep on prompt?
-
 	const [statePrompt, setStatePrompt] = useState<
 		Array<Array<string | number>>
 	>([]);
@@ -124,68 +122,71 @@ const ShowPrompt = ({ prompt }: any) => {
 
 	return (
 		//react-dnd-beautiful
-		<DragDropContext onDragEnd={onDrop}>
-			<Droppable droppableId="droppable" direction="horizontal">
-				{(provided: DroppableProvided, snapshot) => (
-					<div ref={provided.innerRef} {...provided.droppableProps}>
-						{statePrompt.map((i, ind) => (
-							<Draggable
-								key={i[0]}
-								draggableId={String(i[0])}
-								index={ind}
-							>
-								{(provided) => (
-									<Fragment>
-										<PromptP
-											key={ind}
-											color={randomColorRGBA(1)}
-											id="existingPrompt"
-											ref={provided.innerRef}
-											{...provided.draggableProps}
-											{...provided.dragHandleProps}
-										>
-											<button
-												onClick={() =>
-													handleClick(
-														"U",
-														ind,
-														statePrompt
-													)
-												}
+		<>
+			<DragDropContext onDragEnd={onDrop}>
+				<Droppable droppableId="droppable" direction="horizontal">
+					{(provided: DroppableProvided, snapshot) => (
+						<div
+							ref={provided.innerRef}
+							{...provided.droppableProps}
+						>
+							{statePrompt.map((i, ind) => (
+								<Draggable
+									key={i[0]}
+									draggableId={String(i[0])}
+									index={ind}
+								>
+									{(provided) => (
+										<Fragment>
+											<PromptP
+												key={ind}
+												color={randomColorRGBA(1)}
+												id="existingPrompt"
+												ref={provided.innerRef}
+												{...provided.draggableProps}
+												{...provided.dragHandleProps}
 											>
-												Weight Up
-											</button>
-											{ind}
-											<br />
-											{i[0]}
-											<br />
-											{i[1]}
-											<button
-												onClick={() =>
-													handleClick(
-														"D",
-														ind,
-														statePrompt
-													)
-												}
-											>
-												Weight Down
-											</button>
-										</PromptP>
-									</Fragment>
-								)}
-							</Draggable>
-						))}
-						{provided.placeholder}
-						<div>
-							<button onClick={handleShuffle}>
-								Fuck my shit up
-							</button>
+												<button
+													onClick={() =>
+														handleClick(
+															"U",
+															ind,
+															statePrompt
+														)
+													}
+												>
+													Weight Up
+												</button>
+												{ind}
+												<br />
+												{i[0]}
+												<br />
+												{i[1]}
+												<button
+													onClick={() =>
+														handleClick(
+															"D",
+															ind,
+															statePrompt
+														)
+													}
+												>
+													Weight Down
+												</button>
+											</PromptP>
+										</Fragment>
+									)}
+								</Draggable>
+							))}
+							{provided.placeholder}
 						</div>
-					</div>
-				)}
-			</Droppable>
-		</DragDropContext>
+					)}
+				</Droppable>
+			</DragDropContext>
+			<div>
+				<button onClick={handleShuffle}>Fuck my shit up</button>
+			</div>
+		</>
 	);
 
 	// 	<>
