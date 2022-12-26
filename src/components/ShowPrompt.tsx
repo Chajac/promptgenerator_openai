@@ -1,6 +1,7 @@
 import PromptP from "./styled/PromptP";
 import { Fragment, useEffect, useState } from "react";
 import { Button } from "./styled/ButtonStyle";
+import styled from "styled-components";
 import {
 	DragDropContext,
 	DropResult,
@@ -9,8 +10,13 @@ import {
 	DroppableProvided,
 	DroppableProps,
 } from "react-beautiful-dnd";
-
 import React from "react";
+import chroma from "chroma-js";
+
+const DivContainer = styled.div`
+	display: flex;
+	flex-direction: row;
+`;
 
 interface ExtendedDroppableProps extends DroppableProps {
 	axis: "x" | "y";
@@ -32,8 +38,16 @@ const ShowPrompt = ({ prompt }: any) => {
 	const [statePrompt, setStatePrompt] = useState<
 		Array<Array<string | number>>
 	>([]);
+	//const [color, setColor] = useState<Array<string>>([]);
 
-	//Only run on initial render?
+	const colorArray = ["#757575", "#3f3f3f", "#1e1e20"];
+	const colors = getColors(colorArray, statePrompt.length);
+
+	function getColors(colorArray: Array<string>, length: number) {
+		return Array(length)
+			.fill(null)
+			.map((_, index) => colorArray[index % colorArray.length]);
+	}
 
 	//handles rendering the prompt without constantly resetting on prompt updating.
 	useEffect(() => {
@@ -96,7 +110,7 @@ const ShowPrompt = ({ prompt }: any) => {
 	//react-sortable-hoc
 
 	//mouse hover reshuffle handles - reactDnD-Beautiful
-	const onDrop = (dropResult: DropResult) => {
+	const onDragEnd = (dropResult: DropResult) => {
 		if (!dropResult.destination) {
 			return;
 		}
@@ -107,6 +121,23 @@ const ShowPrompt = ({ prompt }: any) => {
 
 		setStatePrompt(updatedStatePrompt);
 	};
+
+	function dropAnimationTweak(style: any, snapshot: any) {
+		if (!snapshot.isDraggable) {
+			return style;
+		}
+
+		console.log("yes");
+		const { moveTo, curve, duration } = snapshot.dropAnimation;
+
+		const translate = `translate(${moveTo.x}px, 15px)`;
+
+		return {
+			...style,
+			transform: `${translate}`,
+			transitionDuration: `1s`,
+		};
+	}
 
 	//colour form
 	function randomColorRGBA(a: number) {
@@ -123,28 +154,30 @@ const ShowPrompt = ({ prompt }: any) => {
 	return (
 		//react-dnd-beautiful
 		<>
-			<DragDropContext onDragEnd={onDrop}>
+			<DragDropContext onDragEnd={onDragEnd}>
 				<Droppable droppableId="droppable" direction="horizontal">
 					{(provided: DroppableProvided, snapshot) => (
-						<div
-							ref={provided.innerRef}
-							{...provided.droppableProps}
-						>
+						<DivContainer ref={provided.innerRef}>
 							{statePrompt.map((i, ind) => (
 								<Draggable
 									key={i[0]}
 									draggableId={String(i[0])}
 									index={ind}
 								>
-									{(provided) => (
-										<Fragment>
+									{(provided, snapshot) => (
+										<DivContainer>
 											<PromptP
 												key={ind}
-												color={randomColorRGBA(1)}
-												id="existingPrompt"
+												color={colors[ind]}
+												id="PromptP"
 												ref={provided.innerRef}
 												{...provided.draggableProps}
 												{...provided.dragHandleProps}
+												style={dropAnimationTweak(
+													provided.draggableProps
+														.style,
+													snapshot
+												)}
 											>
 												<button
 													onClick={() =>
@@ -155,13 +188,15 @@ const ShowPrompt = ({ prompt }: any) => {
 														)
 													}
 												>
-													Weight Up
+													<i className="lni lni-chevron-up"></i>
 												</button>
-												{ind}
-												<br />
-												{i[0]}
-												<br />
-												{i[1]}
+												<div>
+													{ind}
+													<br />
+													{i[0]}
+													<br />
+													{i[1]}
+												</div>
 												<button
 													onClick={() =>
 														handleClick(
@@ -171,15 +206,15 @@ const ShowPrompt = ({ prompt }: any) => {
 														)
 													}
 												>
-													Weight Down
+													<i className="lni lni-chevron-down"></i>
 												</button>
 											</PromptP>
-										</Fragment>
+										</DivContainer>
 									)}
 								</Draggable>
 							))}
 							{provided.placeholder}
-						</div>
+						</DivContainer>
 					)}
 				</Droppable>
 			</DragDropContext>
