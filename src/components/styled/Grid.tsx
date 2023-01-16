@@ -59,10 +59,9 @@ export const GridItem = styled.div`
 `;
 
 export const GridPromptOptions = styled.div`
+	//position: relative;
 	display: grid;
-	grid-template-rows: 1fr;
-	grid-template-columns: 1fr, 1fr, 1fr;
-	justify-items: center;
+	grid-template-columns: repeat(3, 1fr);
 `;
 
 //for ShowPrompt

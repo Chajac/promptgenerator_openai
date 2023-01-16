@@ -1,7 +1,12 @@
 import styled from "styled-components";
 
-export const Button = styled.button`
-	width: 10%;
+interface Props {
+	width?: string;
+}
+
+export const Button = styled.button<Props>`
+	//width: 10%;
+	width: ${(width: any) => width || "10%"};
 	background: #f0e8dd;
 	border: none;
 	color: #000000;
