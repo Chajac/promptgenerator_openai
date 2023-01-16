@@ -247,7 +247,9 @@ const ShowPrompt = ({ prompt }: any) => {
 			</DragDropContext>
 			<div className="titleSeparator"></div>
 			<GridPromptOptions>
-				<Button onClick={handleShuffle}>Fuck my shit up</Button>
+				<Button onClick={handleShuffle} width={"100%"}>
+					Fuck my shit up
+				</Button>
 				<form>
 					{formatOptions.map((option) => (
 						<label key={option.value}>
@@ -261,7 +263,7 @@ const ShowPrompt = ({ prompt }: any) => {
 						</label>
 					))}
 				</form>
-				<Button onClick={() => handleCopyToClipboard()}>
+				<Button onClick={() => handleCopyToClipboard()} width={"100%"}>
 					Copy to Clipboard
 				</Button>
 			</GridPromptOptions>
