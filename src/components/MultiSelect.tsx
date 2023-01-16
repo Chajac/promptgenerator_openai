@@ -18,6 +18,9 @@ import { StyledSelect } from "./styled/MultiSelectStyle";
 import {} from "./ArtistSelect";
 
 const customStyle = {
+	container: (provided: any, state: any) => ({
+		...provided,
+	}),
 	menuList: (provided: any, state: any) => ({
 		...provided,
 		overflow: "auto",
@@ -101,7 +104,7 @@ export const SortableSelect = SortableContainer(Select) as React.ComponentClass<
 >;
 
 // MULTIPLE SELECT //
-export function DragMultiSelect({ options, getList, placeholder }: any) {
+export function DragMultiSelect({ options, getList, placeholder, width }: any) {
 	const [selected, setSelected] = React.useState<readonly selectInterface[]>(
 		[]
 	);

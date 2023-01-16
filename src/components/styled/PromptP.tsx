@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
+type PromptPProps = {
+	color: string;
+	saturation: number;
+};
+
 function randomColorRGBA(a: number) {
 	// Random Hex {Math.floor(Math.random() * 16777215).toString(16)
 
@@ -25,7 +30,7 @@ function randomColorRGBA(a: number) {
 //     background-color: ${() => randomColorRGBA(1)};
 //   }
 // `;
-const PromptP = styled.p`
+const PromptP = styled.p<PromptPProps>`
 	display: inline-block;
 	text-align: center;
 	line-height: 1.5em;
@@ -33,9 +38,10 @@ const PromptP = styled.p`
 	font-weight: bold;
 	margin: 0.25em;
 	padding: 0.25em 0.75em 0.25em 0.75em;
+
 	&:hover {
-		background-color: ${(props: { color: string }) => props.color};
-		/* 	filter: saturate(500%); */
+		background-color: ${(props) => props.color};
+		filter: saturate(${(props) => props.saturation}%);
 		font-weight: bolder;
 
 		//Marker style highlight -- doesn't work with random colors right now.

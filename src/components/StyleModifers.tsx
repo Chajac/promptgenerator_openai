@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { DragSingleSelect } from "./MultiSelect";
+import styled from "styled-components";
 import styleList from "./StyleList";
+
+const Div = styled.div`
+	position: relative;
+	left: 0;
+	top: 0;
+`;
 
 let selectOptions: any[] = [];
 
@@ -36,13 +43,14 @@ function StyleModifiers({ getStyle }: any) {
 	}, [selectData, setSelectData, getStyle]);
 
 	return (
-		<div>
+		<Div>
 			<DragSingleSelect
 				options={selectOptions}
 				getList={setSelectData}
 				placeholder="Style"
+				width={"300px"}
 			/>
-		</div>
+		</Div>
 	);
 }
 

@@ -35,10 +35,7 @@ div{
   background-color: white;
   padding: 0 2em;
 }
-
-
-
-        
+       
 }
 p {
         font-size:24px;
