@@ -36,6 +36,7 @@ export const artistList: artistlistInterface = {
 		"Kyle Hotz",
 		"Gabriel Hardman",
 		"Greg Capullo",
+		"Boris Vallejo",
 	],
 	manga: [
 		"Hiromasa Ogura",

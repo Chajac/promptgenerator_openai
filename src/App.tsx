@@ -13,6 +13,8 @@ import createPrompt from "./components/StringCreation";
 import GlobalStyle from "./components/styled/Theme";
 import { Button } from "./components/styled/ButtonStyle";
 import { Flex } from "./components/styled/Flex";
+import ModalWindow from "./components/ModalWindow";
+import Settings from "./components/Settings";
 import {
 	GridContainer,
 	GridItem,
@@ -36,6 +38,8 @@ function App() {
 	const [getStyle, setgetStyle] = useState(null);
 	const [getNegMod, setGetNegMod] = useState(null);
 	const [getPosMod, setGetPosMod] = useState(null);
+	const [apiKey, setApiKey] = useState("None");
+	const [settings, setSettings] = useState({});
 	const [temperature, setTemperature] = useState(0.5);
 	const [queryLength, setqueryLength] = useState(0.5);
 	const [promptWeight, setpromptWeight] = useState(0);
@@ -57,6 +61,7 @@ function App() {
 			<GlobalStyle />
 			<body>
 				<GridContainer>
+					<Settings setApiKey={setApiKey} setSettings={setSettings} />
 					<div className="Title">
 						<h1 className="blackletter">Prompting the Prompter</h1>
 						<div className="titleSeparator">
@@ -66,7 +71,11 @@ function App() {
 						</div>
 					</div>
 					<PromptInput>
-						<WrittenPrompt getGenPrompt={setgenPrompt} />
+						<WrittenPrompt
+							settings={settings}
+							getGenPrompt={setgenPrompt}
+							apiKey={apiKey}
+						/>
 					</PromptInput>
 					<div className="titleSeparator"></div>
 					<TwoColGrid>
