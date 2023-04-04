@@ -9,6 +9,7 @@ import {
 	GridPromptOptions,
 	ShowPromptDivContainer,
 } from "../styled/Grid";
+import { Form } from "../styled/Form";
 import {
 	DragDropContext,
 	DropResult,
@@ -248,9 +249,9 @@ const ShowPrompt = ({ prompt }: any) => {
 			<div className="titleSeparator"></div>
 			<GridPromptOptions>
 				<Button onClick={handleShuffle} width={"100%"}>
-					Fuck my shit up
+					Shuffle Prompt
 				</Button>
-				<form>
+				<Form>
 					{formatOptions.map((option) => (
 						<label key={option.value}>
 							<input
@@ -262,7 +263,7 @@ const ShowPrompt = ({ prompt }: any) => {
 							{option.label}
 						</label>
 					))}
-				</form>
+				</Form>
 				<Button onClick={() => handleCopyToClipboard()} width={"100%"}>
 					Copy to Clipboard
 				</Button>

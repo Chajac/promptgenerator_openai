@@ -10,6 +10,7 @@ export const ModalDiv = styled.div`
 export const ModalOverlay = styled.div`
 	position: fixed;
 	bottom: 20px;
+	width: 20%;
 	right: 20px;
 	z-index: 1;
 	background-color: white;
@@ -22,4 +23,12 @@ export const ListDiv = styled.div`
 	&:hover {
 		cursor: pointer;
 	}
+`;
+
+export const ModalP = styled.p`
+	font-size: 0.8rem;
+`;
+
+export const ModalList = styled.li`
+	font-size: 0.8rem;
 `;

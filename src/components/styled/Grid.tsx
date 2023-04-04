@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface Props {
+	width?: string;
+}
+
 export const GridContainer = styled.div`
 	display: grid;
 	grid-template-columns: repeat(1, 1fr);
@@ -58,10 +62,18 @@ export const GridItem = styled.div`
 	}
 `;
 
-export const GridPromptOptions = styled.div`
+export const GridPromptOptionsContainer = styled.div<Props>`
 	//position: relative;
+	width: ${(width: any) => width || "50%"};
+`;
+
+export const GridPromptOptions = styled.div<Props>`
+	position: relative;
+	left: 25%;
+	justify-content: center;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
+	width: 50%;
 `;
 
 //for ShowPrompt

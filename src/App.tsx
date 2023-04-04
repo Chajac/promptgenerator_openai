@@ -71,19 +71,19 @@ function App() {
 					<div className="titleSeparator"></div>
 					<TwoColGrid>
 						<GridItem className="left">
-							<div>Select your style</div>
+							<div>Style Select</div>
 							<StyleModifiers getStyle={setgetStyle} />
 						</GridItem>
 						<VerticalSeparator />
 						<GridItem className="right">
-							<div className="ArtistT">Add some artists</div>
+							<div className="ArtistT">Artist Select</div>
 							<ArtistSelect getArtists={setGetArtists} />
 						</GridItem>
 					</TwoColGrid>
 					<div className="titleSeparator"></div>
 					<GridItem className="posMods">
 						<div className="posContainer">
-							<div className="posModT">Why not add some</div>
+							<div className="posModT">Modifier Select</div>
 							<PositiveModifers getPosMod={setGetPosMod} />
 						</div>
 					</GridItem>
@@ -99,7 +99,7 @@ function App() {
 						}}
 					/>
 					<GridItem style={{ visibility: "hidden" }}>
-						how about some
+						Negative Modifiers
 						<NegModifers getNegMod={setGetNegMod} />
 					</GridItem>
 				</GridContainer>

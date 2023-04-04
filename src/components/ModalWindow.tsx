@@ -1,5 +1,5 @@
 import React from "react";
-import { ModalOverlay, ListDiv } from "./styled/ModalStyle";
+import { ModalOverlay, ListDiv, ModalP, ModalList } from "./styled/ModalStyle";
 import { copyToClipboard } from "./CopyToClipboardFunc";
 
 interface Props {
@@ -13,13 +13,13 @@ function ModalWindow({ content, closeModal }: Props) {
 			<div className="m-content">
 				<ol>
 					{content.map((i: any, key: number) => (
-						<li>
+						<ModalList>
 							<ListDiv
 								onClick={() => copyToClipboard(i.positive)}
 							>
-								<p>{i.positive}</p>
+								<ModalP>{i.positive}</ModalP>
 							</ListDiv>
-						</li>
+						</ModalList>
 					))}
 				</ol>
 				<button onClick={closeModal}>Close</button>
