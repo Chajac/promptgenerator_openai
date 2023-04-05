@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { DragSingleSelect } from "./MultiSelect";
 import oaiConfig from "./OpenAIConfig";
 import RangeSlider from "./RangeSlider";
+import { Button } from "./styled/ButtonStyle";
 import OpenAISettings from "./OpenAISettings";
 
 interface Props {
@@ -34,7 +35,7 @@ const Div = styled.div`
 	box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
 	z-index: 9999;
 `;
-const Button = styled.button`
+const Button2 = styled.button`
 	position: fixed;
 	top: 0.25rem;
 	right: 0.4rem;
@@ -128,7 +129,7 @@ const Settings: React.FC<Props> = ({ setApiKey, setSettings }) => {
 
 	return (
 		<>
-			<Button onClick={() => setShowModal(true)}>⚙️</Button>
+			<Button2 onClick={() => setShowModal(true)}>⚙️</Button2>
 			{showModal && (
 				<Div>
 					<h2>Settings</h2>
@@ -155,12 +156,24 @@ const Settings: React.FC<Props> = ({ setApiKey, setSettings }) => {
 							/>
 						</label>
 						<input
+							style={{
+								position: "relative",
+								left: "-25px",
+								top: "2px",
+							}}
 							type="checkbox"
 							checked={showPassword}
 							onChange={togglePasswordVisbility}
 							autoComplete="new-password"
 						></input>
-						<button type="submit">Apply</button>
+						<Button
+							background={"#272727"}
+							color={"white"}
+							padding={"5px 10px 5px 10px"}
+							type="submit"
+						>
+							Apply
+						</Button>
 					</form>
 					<h2>openAI model</h2>
 					<DragSingleSelect
@@ -203,9 +216,14 @@ const Settings: React.FC<Props> = ({ setApiKey, setSettings }) => {
 						onChange={(e) => setTokenlength(Number(e.target.value))}
 					></input>
 					<div>
-						<button onClick={() => setShowModal(false)}>
+						<Button
+							background={"#272727"}
+							color={"white"}
+							padding={"5px 10px 5px 10px"}
+							onClick={() => setShowModal(false)}
+						>
 							Close
-						</button>
+						</Button>
 					</div>
 				</Div>
 			)}

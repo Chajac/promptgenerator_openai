@@ -1,6 +1,6 @@
 import PromptP from "../styled/PromptP";
 import { Fragment, useEffect, useRef, useState } from "react";
-import { Button } from "../styled/ButtonStyle";
+import { Button, ButtonModalSettings } from "../styled/ButtonStyle";
 import styled from "styled-components";
 import ModalWindow from "../ModalWindow";
 import { ModalDiv } from "../styled/ModalStyle";
@@ -273,7 +273,9 @@ const ShowPrompt = ({ prompt }: any) => {
 			<GridItem></GridItem>
 			<div className="titleSeparator"></div>
 			<ModalDiv>
-				<button onClick={() => setShowModal(true)}>History</button>
+				<ButtonModalSettings onClick={() => setShowModal(true)}>
+					📜
+				</ButtonModalSettings>
 				{showModal && (
 					<ModalWindow
 						content={modalHistory}
