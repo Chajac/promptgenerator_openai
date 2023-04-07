@@ -21,12 +21,6 @@ function WrittenPrompt({ getGenPrompt, apiKey, settings }: any) {
 	const [prompt, setPrompt] = useState("");
 	const [genprompt, setgenPrompt] = useState<Array<string>>([]);
 	const [useAi, setUseAi] = useState(false);
-	// const [models, setModels] = useState<modelSelect>({
-	// 	label: "",
-	// 	id: "",
-	// });
-	// const [temperature, setTemperature] = useState<number | undefined>(0.5);
-	// const [queryLength, setqueryLength] = useState<number | undefined>(24);
 
 	const handleChange = () => {
 		setUseAi(!useAi);

@@ -30,8 +30,6 @@ function OpenAiGen({ getGenPrompt, oAIConfig }: any) {
 		getGenPrompt(genprompt);
 	}, [genprompt, setgenPrompt, getGenPrompt]);
 
-	async function generateNonAiPrompt(prompt: string) {}
-
 	async function generateAiPrompt(prompt: string) {
 		const openai = new OpenAIApi(oAIConfig);
 		const response: any = await openai.createCompletion({
@@ -73,7 +71,9 @@ function OpenAiGen({ getGenPrompt, oAIConfig }: any) {
 							onChange={setPrompt}
 							placeholder="Prompt input"
 						/>
-						<Button onClick={() => setgenPrompt([prompt])}>Text Input</Button>
+						<Button onClick={() => setgenPrompt([prompt])}>
+							Text Input
+						</Button>
 					</>
 				}
 				tabTitle2="Ai Prompt"
@@ -92,7 +92,10 @@ function OpenAiGen({ getGenPrompt, oAIConfig }: any) {
 				tabTitle3="AI Settings"
 				aiSettings={
 					<>
-						<DragSingleSelect options={modelList} getList={setModels} />
+						<DragSingleSelect
+							options={modelList}
+							getList={setModels}
+						/>
 						<RangeSlider
 							min={0}
 							max={100}

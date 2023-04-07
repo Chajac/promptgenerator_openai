@@ -68,12 +68,7 @@ const Settings: React.FC<Props> = ({ setApiKey, setSettings }) => {
 	>([]);
 	const [temperature, setTemperature] = useState(0.5);
 	const [tokenlength, setTokenlength] = useState(25);
-	// const [settingsValues, setSettingsValues] = useState({
-	// 	temperature: temperature,
-	// 	tokenlength: "25",
-	// });
 
-	//const modelList: { label?: string; value?: string }[] = [];
 	const settingsValues1 = useMemo(
 		() => ({
 			models: models.label ? models.label : "no model loaded",
@@ -99,18 +94,12 @@ const Settings: React.FC<Props> = ({ setApiKey, setSettings }) => {
 				console.log("Error: ", error.message);
 			}
 		}
-		// response.data?.data?.forEach((i) => {
-		// 	if (i.owned_by === "openai") {
-		// 		modelList.push({ value: i.id, label: i.id });
-		// 	}
-		// });
 	}
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		await setApiKey(newApiKey);
 		getModels(newApiKey);
-		//setShowModal(false);
 	};
 
 	const togglePasswordVisbility = () => {
@@ -125,7 +114,6 @@ const Settings: React.FC<Props> = ({ setApiKey, setSettings }) => {
 	useEffect(() => {
 		setSettings(settingsValues1);
 	}, [settingsValues1, setSettings]);
-	//console.log(settingsValues1);
 
 	return (
 		<>

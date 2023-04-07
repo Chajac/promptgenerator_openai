@@ -1,13 +1,10 @@
 import React, { Fragment, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import TextField from "./components/TextField";
 import ArtistSelect from "./components/ArtistSelect";
 import NegModifers from "./components/NegativeModifers";
 import PositiveModifers from "./components/PositiveModifiers";
 import StyleModifiers from "./components/StyleModifers";
 import RangeSlider from "./components/RangeSlider";
-import { Configuration, OpenAIApi } from "openai";
-import oaiConfig from "./components/OpenAIConfig";
 import ShowPrompt from "./components/showprompt/ShowPrompt";
 import createPrompt from "./components/StringCreation";
 import GlobalStyle from "./components/styled/Theme";
@@ -22,15 +19,8 @@ import {
 	TwoColGrid,
 	VerticalSeparator,
 } from "./components/styled/Grid";
-import OpenAiGen from "./components/OpenAiGen";
 import WrittenPrompt from "./components/WrittenPrompt";
 
-/* // Open AI settings
-const oaiConfig = new Configuration({
-  organization: "org-vV3sYibXFeOTvkmc2Br9Ik7p",
-  apiKey: process.env.REACT_APP_OPEN_AI_KEY,
-});
- */
 function App() {
 	//const [prompt, setPrompt] = useState("");
 	const [genprompt, setgenPrompt] = useState(null);
@@ -40,21 +30,12 @@ function App() {
 	const [getPosMod, setGetPosMod] = useState(null);
 	const [apiKey, setApiKey] = useState("None");
 	const [settings, setSettings] = useState({});
-	const [temperature, setTemperature] = useState(0.5);
-	const [queryLength, setqueryLength] = useState(0.5);
-	const [promptWeight, setpromptWeight] = useState(0);
-	const [posmodWeight, setposmodWeight] = useState(0);
-	const [negmodWeight, setnegmodWeight] = useState(0);
-
 	const prompt = createPrompt(
 		getStyle,
 		genprompt,
 		getArtists,
 		getPosMod,
 		getNegMod
-		// promptWeight,
-		// posmodWeight,
-		// negmodWeight
 	);
 	return (
 		<Fragment>
