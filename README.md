@@ -1,46 +1,14 @@
-# Getting Started with Create React App
+# AI ART PROMPT GENERATOR WITH A CHATGPT ASSIST
+### Usage
+Primarily used to get better, more accurate results out of Disco Diffusion and Stable Diffusion via prompt weighting and using different syntax.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### How to use?
+There's two modes, regular generation and GPT assisted generation.
+For regular generation type in the prompt you want. Select a style, artists and positive modifiers. Rearrange these as you see fit, add a positive or negative weight if you'd like them to be favoured higher in the generation. The priority can also be augmented by chosing either square bracket formatting for Stable Diffusion or parenthesis formatting for Disco Diffusion.
+From there you can copy that to clipboard and paste it into your favourite interface for generation.
+GPT assisted generation has a similar process for the most part however you will need to set your chatGPT API key in the settings and choose a model. Heat within the settings is a determining factor for how much creativity the model should have with your input. The higher the heat the more it will stick to your input.
+Token length is a determining factor for how long the response can or should be before it terminates. This is typically variable depending on the model used; a guideline is here https://openai.com/pricing.
 
-## Available Scripts
+Once you've copied a prompt it will be recorded in the history. Be aware this currently has no persistent memory, you will lose your results on a refresh. 
 
-In the project directory, you can run:
 
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
