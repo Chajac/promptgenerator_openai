@@ -37,16 +37,14 @@ const Div = styled.div`
 `;
 const Button2 = styled.button`
 	position: fixed;
-	top: 0.25rem;
+	top: 0rem;
 	right: 0.4rem;
-	padding: 12px 20px;
+	padding: 18px 13px;
 	background-color: #5c5252;
 	color: white;
 	border: none;
-	border-radius: 2px;
 	font-size: 24px;
 	cursor: pointer;
-	transform: rotate(90deg);
 `;
 
 const Input = styled.input<styledProps>`

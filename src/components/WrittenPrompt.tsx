@@ -42,8 +42,6 @@ function WrittenPrompt({ getGenPrompt, apiKey, settings }: any) {
 				/[^\w\s]/g,
 				""
 			);
-			console.log(outputText);
-			console.log(response.data);
 			return setgenPrompt(outputText);
 		}
 	}
@@ -66,6 +64,7 @@ function WrittenPrompt({ getGenPrompt, apiKey, settings }: any) {
 				/>
 				<ToggleButton checked={useAi} setChecked={handleChange} />
 				<Button
+					padding={"0px 20px 0px 20px"}
 					onClick={() => {
 						if (useAi === true) {
 							generateAiPrompt(prompt);
@@ -73,7 +72,7 @@ function WrittenPrompt({ getGenPrompt, apiKey, settings }: any) {
 						setgenPrompt([prompt]);
 					}}
 				>
-					<p>Submit</p>
+					<p className="submit">Submit</p>
 				</Button>
 			</Div>
 		</>

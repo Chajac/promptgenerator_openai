@@ -19,7 +19,7 @@ const ToggleLabel = styled.span<{ checked: boolean }>`
 	position: absolute;
 	cursor: pointer;
 	inset: 0px;
-	background-color: ${({ checked }) => (checked ? "#333" : "#ccc")};
+	background-color: ${() => "#333"};
 	transition: background-color 0.4s;
 
 	&:before {
@@ -37,7 +37,7 @@ const ToggleText = styled.span<{ checked: boolean }>`
 	top: 45%;
 	transform: translateY(-50%);
 	font-size: 18px;
-	color: ${({ checked }) => (checked ? "white" : "black")};
+	color: ${({ checked }) => (checked ? "#c0c0c068" : "black")};
 	transition: color 0.4s;
 	width: 50%;
 	text-align: center;

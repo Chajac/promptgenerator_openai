@@ -6,11 +6,10 @@ const Input = styled.textarea`
 	width: 700px;
 	height: 150px;
 	border: 0;
-	/* border-bottom: 4px solid blue; */
 	outline: 0;
 	color: #222222;
 	padding: 15px;
-	background: #d8d4c7;
+	background: #f0e8dd;
 	transition: border-color 0.2s;
 	text-align: center;
 	resize: none;
@@ -48,7 +47,6 @@ const TextField = ({ value, onChange, placeholder, onClick }: iProps) => {
 				onChange={({ target: { value } }) => onChange(value)}
 				placeholder={placeholder}
 			/>
-			{/*       <Button onClick={() => onClick}>Generate</Button> */}
 		</>
 	);
 };

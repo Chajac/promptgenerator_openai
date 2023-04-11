@@ -35,11 +35,10 @@ export const ButtonModalSettings = styled.button`
 	position: fixed;
 	top: 0rem;
 	right: 4rem;
-	padding: 18.5px 13px;
+	padding: 18px 13px;
 	background-color: #353434;
 	color: white;
 	border: none;
-	border-radius: 2px;
 	font-size: 24px;
 	cursor: pointer;
 `;

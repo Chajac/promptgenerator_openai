@@ -9,13 +9,13 @@ export const ModalDiv = styled.div`
 
 export const ModalOverlay = styled.div`
 	position: fixed;
-	bottom: 20px;
-	width: 20%;
-	right: 20px;
+	top: 0px;
+	width: 15%;
+	right: 0px;
 	z-index: 1;
-	background-color: white;
+	background-color: #949191;
 	padding: 20px;
-	border-radius: 5px;
+	border-radius: 0px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 `;
 

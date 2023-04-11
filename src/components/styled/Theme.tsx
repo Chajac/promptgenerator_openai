@@ -39,6 +39,10 @@ div{
 }
 p {
         font-size:24px;
+
+        &.submit{
+                font-weight:bold;
+        }
 }
 `;
 

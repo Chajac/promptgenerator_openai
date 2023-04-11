@@ -4,13 +4,9 @@ import ArtistSelect from "./components/ArtistSelect";
 import NegModifers from "./components/NegativeModifers";
 import PositiveModifers from "./components/PositiveModifiers";
 import StyleModifiers from "./components/StyleModifers";
-import RangeSlider from "./components/RangeSlider";
 import ShowPrompt from "./components/showprompt/ShowPrompt";
 import createPrompt from "./components/StringCreation";
 import GlobalStyle from "./components/styled/Theme";
-import { Button } from "./components/styled/ButtonStyle";
-import { Flex } from "./components/styled/Flex";
-import ModalWindow from "./components/ModalWindow";
 import Settings from "./components/Settings";
 import {
 	GridContainer,
